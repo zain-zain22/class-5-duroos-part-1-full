@@ -1,0 +1,22 @@
+{
+  "version": 1784206118488,
+  "quizInfo": {
+    "class": "5",
+    "subject": "ദുരുസ്",
+    "part": "1",
+    "chapter": "Full",
+    "lessonName": ""
+  },
+  "questions": [
+    {
+      "qText": "ആദ്യത്തെ പ്രവാചകൻ ആരാണ്",
+      "correctText": "ആദം നബി",
+      "wrong1Text": "മൂസാ നബി",
+      "wrong2Text": "നൂഹ് നബി",
+      "qSrc": "",
+      "correctSrc": "",
+      "wrong1Src": "",
+      "wrong2Src": ""
+    }
+  ]
+}
