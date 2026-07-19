@@ -239,9 +239,20 @@ audio { margin-top: 5px; display: none; width: 100%; }
 
 
 <div id="section-liveword" class="admin-box" style="border-top: 4px solid #2ecc71; display: none;">
-<h2>⚙️ വേർഡ് ആപ്പ് ലൈവ് മാനേജർ</h2>
-<p style="font-size:12px; color:#7f8c8d; text-align:center; margin-bottom:10px;">മലയാളം ടൈപ്പ് ചെയ്യുമ്പോൾ ഓട്ടോമാറ്റിക് ആയി അറബി മലയാളം രൂപം വരും.</p>
-<div id="liveWordsContainer"></div>
+ <h2>⚙️ വേർഡ് ആപ്പ് ലൈവ് മാനേജർ</h2>
+ <p style="font-size:12px; color:#7f8c8d; text-align:center; margin-bottom:10px;">മലയാളം ടൈപ്പ് ചെയ്യുമ്പോൾ ഓട്ടോമാറ്റിക് ആയി അറബി മലയാളം രൂപം വരും.</p>
+
+ <!-- ⚡ ഇവിടെയാണ് പുതിയ പാരഗ്രാഫ് ബൾക്ക് ബോക്സ് വരുന്നത് -->
+ <div class="section" style="background: #ebfcf2; border-color: #c3f3d7;">
+   <h4>📦 ഒരു ഫുൾ പാരഗ്രാഫ് നൽകി വാക്കുകൾ വേർതിരിക്കുക:</h4>
+   <p style="font-size:11px; color:#555; margin:0 0 5px 0;">മലയാളം പാരഗ്രാഫ് മുഴുവനായി താഴെ പേസ്റ്റ് ചെയ്യുക (സിസ്റ്റം സ്വയം ഓരോ വാക്കാക്കി അറബി മലയാളം രൂപം നൽകും):</p>
+   <textarea id="bulkWordInput" style="min-height: 100px; font-size: 13px;" placeholder="വുളൂഅ് ചെയ്ത് നിസ്കാരം നിർവ്വഹിക്കുന്നത് വിശ്വാസിയുടെ കടമയാണ്."></textarea>
+   <button type="button" class="btn-blue" style="background:#2ecc71;" onclick="importBulkWords()">⚡ പാരഗ്രാഫിലെ വാക്കുകൾ ലിസ്റ്റിലേക്ക് ചേർക്കുക</button>
+ </div>
+ <!-- ⚡ ബൾക്ക് ബോക്സ് അവസാനം -->
+
+ <div id="liveWordsContainer"></div>
+
 <button type="button" class="btn-purple" style="background:#2ecc71;" onclick="addNewLiveWordRow()">➕ പുതിയ വാക്ക് ഇൻപുട്ട് ചേർക്കുക</button>
 </div>
 
