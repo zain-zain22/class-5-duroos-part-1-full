@@ -871,6 +871,71 @@ function importBulkQuizzes() {
         alert("⚠️ ഫോർമാറ്റ് മാറിയോ എന്ന് പരിശോധിക്കുക (ചോദ്യം | ശരിയുത്തരം | തെറ്റ്1 | തെറ്റ്2)");
     }
 }
+function importBulkWords() {
+    let rawText = document.getElementById('bulkWordInput').value.trim();
+    if(!rawText) return alert("ദയവായി വാക്കുകളോ പാരഗ്രാഫോ ബോക്സിൽ ടൈപ്പ് ചെയ്യുക!");
+    
+    let wordsArray = [];
+    let uniqueWords = new Set(); 
+
+    // ⚡ നിലവിൽ താഴെയുള്ള ലിസ്റ്റിൽ (UI-ൽ) ഏതൊക്കെ വാക്കുകൾ ഉണ്ടോ അവയൊക്കെ കണ്ടുപിടിച്ച് ഈ സെറ്റിലേക്ക് മാറ്റുന്നു
+    let existingInputs = document.querySelectorAll('#liveWordsContainer input[type="text"]');
+    existingInputs.forEach(input => {
+        if(input.id.startsWith('mal_')) { // മലയാളം ഇൻപുട്ടുകൾ മാത്രം നോക്കുന്നു
+            uniqueWords.add(input.value.trim());
+        }
+    });
+
+    if (rawText.includes('\n') || rawText.includes('|')) {
+        let lines = rawText.split('\n');
+        lines.forEach(line => {
+            if(!line.trim()) return;
+            let parts = line.split('|');
+            let malPart = parts[0].trim();
+            let arbiPart = (parts.length >= 2 && parts[1].trim() !== '') ? parts[1].trim() : convertMalayalamToArbi(malPart);
+            
+            // ⚡ ലിസ്റ്റിൽ ഇല്ലാത്തതാണെങ്കിൽ മാത്രം എടുക്കുക
+            if(malPart && !uniqueWords.has(malPart)) {
+                uniqueWords.add(malPart);
+                wordsArray.push({ mal: malPart, arbi: arbiPart });
+            }
+        });
+    } else {
+        let cleanText = rawText.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?"'’]/g, " ");
+        let words = cleanText.split(/\s+/);
+        
+        words.forEach(word => {
+            let malPart = word.trim();
+            if(malPart && isNaN(malPart)) {
+                // ⚡ പാരഗ്രാഫിലോ പഴയ ലിസ്റ്റിലോ ഈ വാക്ക് ആവർത്തിച്ചിട്ടില്ലെങ്കിൽ മാത്രം!
+                if(!uniqueWords.has(malPart)) {
+                    uniqueWords.add(malPart);
+                    let arbiPart = convertMalayalamToArbi(malPart); 
+                    wordsArray.push({ mal: malPart, arbi: arbiPart });
+                }
+            }
+        });
+    }
+    
+    if(wordsArray.length === 0) return alert("⚠️ പുതിയ വാക്കുകളൊന്നും കണ്ടെത്താനായില്ല! (എല്ലാം നിലവിലുള്ളവയോ അല്ലെങ്കിൽ ബോക്സ് കാലിയോ ആണ്)");
+
+    if(liveWordsMemory.length === 0) {
+        let container = document.getElementById('liveWordsContainer');
+        if(container) container.innerHTML = '';
+    }
+    
+    let importedCount = 0;
+    wordsArray.forEach(item => {
+        liveWordCount++;
+        createLiveWordRowElement(liveWordCount, item.mal, item.arbi, '', true);
+        importedCount++;
+    });
+    
+    if(importedCount > 0) {
+        alert(`🎉 വിജയകരം! പാരഗ്രാഫിൽ നിന്ന് ആവർത്തനമില്ലാത്ത ${importedCount} പുതിയ വാക്കുകൾ ലിസ്റ്റിലേക്ക് ചേർത്തു.`);
+        document.getElementById('bulkWordInput').value = "";
+    }
+}
 
 // ⚡ ശബ്ദം നൽകാൻ വേണ്ടി ഫോമിലേക്ക് ചോദ്യം ലോഡ് ചെയ്യാൻ
 function loadQuizToEdit(index) {
